@@ -1,5 +1,6 @@
 import cv2
 import datetime
+import numpy as np
 from vidstab.VidStab import VidStab
 import matplotlib.pyplot as plt
 import copy
@@ -17,7 +18,7 @@ font = cv2.FONT_HERSHEY_DUPLEX
 idframe = 0
 
 # allows user to set parameter for size of frame & initializes new frame size
-spar = .5
+spar = .8
 w = cap.get(cv2.CAP_PROP_FRAME_WIDTH) * spar
 h = cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * spar
 while cap.isOpened():
@@ -33,7 +34,7 @@ while cap.isOpened():
         frame2 = copy.copy(frame)
         frame2 = cv2.putText(frame2, text, (10, int(h-20)), font, .5, (255, 255, 255), 1, cv2.LINE_AA)
         frame2 = cv2.putText(frame2, datet, (10, 20), font, .5, (255, 255, 255), 1, cv2.LINE_AA)
-
+        frame2 = cv2.copyMakeBorder(frame2, 20, 20, 20, 20, borderType=0)
         # initiates stabilization parameter for first few frames, enables smooth stabilization from start
         window = idframe - 1 if idframe < 31 else 30
         # stabilization function based on parameters given forehand
@@ -44,9 +45,13 @@ while cap.isOpened():
         res = cv2.putText(res, datet, (10, 30), font, .5, (255, 255, 255), 1, cv2.LINE_AA)
         # res = res[int(h/8):int(h), int(w/8):int(w)]
 
-        # opens window containing frames (videos) of raw & stabilized side by side
-        cv2.imshow('frame', frame2)
-        cv2.imshow('stab_frame', res)
+        # opens 2 individual windows containing frames (videos) of raw & stabilized
+        # cv2.imshow('frame', frame2)
+        # cv2.imshow('stab_frame', res)
+
+        # concatinates the 2 windows to a single window side by side
+        concat = np.concatenate((frame2, res), axis=1)
+        cv2.imshow('stabilization comparison', concat)
 
     # waits for optional 'q' or 'esc' user keystroke to quit at any time
     keyboard = cv2.waitKey(1)

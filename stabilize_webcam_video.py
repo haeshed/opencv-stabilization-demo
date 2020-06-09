@@ -74,9 +74,9 @@ def main():
             break
 
     # shows graphic representation of video stabilization trajectory, option for exporting data
-    # stabilizer.plot_trajectory()
+    stabilizer.plot_trajectory()
     plt.show()
-    # stabilizer.plot_transforms()
+    stabilizer.plot_transforms()
     plt.show()
     # auto-release video capture & deletes open windows
     cap.release()

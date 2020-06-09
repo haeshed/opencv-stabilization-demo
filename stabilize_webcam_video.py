@@ -13,7 +13,7 @@ def main():
     # sets video capture source, live feed or using existing file
     # cap = cv2.VideoCapture(0)
     # cap = cv2.VideoCapture('vtest2.avi')
-    cap = cv2.VideoCapture('autovideosrc ! videoconvert ! appsink')
+    cap = cv2.VideoCapture('autovideosrc ! decodebin ! videoconvert ! appsink')
 
     # set codec & font, initialize frame counter
     fourcc = cv2.VideoWriter_fourcc(*'XVID')

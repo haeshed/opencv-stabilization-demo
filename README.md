@@ -13,7 +13,7 @@ The output video is shown side by side with the raw input video, and saved in th
 
 # Etceteras
 The simple options added to the project are a few, mainly:
-/n1. The output.avi (saves the file to the project directory)
-2. Graphs for the trajectory and transforms
-3. The ability to stream from a few sources
-4. Option to change parameters such as scaling of the video, border amount, smoothness of video
+* The output.avi (saves the file to the project directory)
+* Graphs for the trajectory and transforms
+* The ability to stream from a few sources
+* Option to change parameters such as scaling of the video, border amount, smoothness of video

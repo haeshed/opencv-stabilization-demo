@@ -2,13 +2,13 @@ import copy
 import cv2
 from datetime import datetime
 import numpy as np
-# from vidstab.VidStab import VidStab
+from vidstab.VidStab import VidStab
 import matplotlib.pyplot as plt
 
 
 def main():
     # initialize stabilizer
-    # stabilizer = VidStab()
+    stabilizer = VidStab()
 
     # sets video capture source, live feed or using existing file
     # cap = cv2.VideoCapture(0)
@@ -19,7 +19,7 @@ def main():
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
     # allows user to set parameter for size of frame & initializes new frame size
-    spar = .8
+    spar = .5
     bor = 20
     w = cap.get(cv2.CAP_PROP_FRAME_WIDTH) * spar
     h = cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * spar
@@ -49,8 +49,8 @@ def main():
             # initiates stabilization parameter for first few frames, enables smooth stabilization from start
             window = idframe - 1 if idframe < 31 else 30
             # stabilization function based on parameters given forehand
-            # res = stabilizer.stabilize_frame(input_frame=frame, smoothing_window=window, border_type='black', border_size=bor)
-            res = cv2.copyMakeBorder(frame, bor, bor, bor, bor, borderType=0)
+            res = stabilizer.stabilize_frame(input_frame=frame, smoothing_window=window, border_type='black', border_size=bor)
+            # res = cv2.copyMakeBorder(frame, bor, bor, bor, bor, borderType=0)
 
             # text addition (date, time, frame number) for stabilized frame
             text = f'Width: {w} Height: {h} frame id: {idframe - 1}'

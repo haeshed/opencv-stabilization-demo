@@ -1,6 +1,7 @@
 # opencv-stabilization-demo
 
 A video stabilization demo using openCV and vidStab with python.
+
 This mainly involves reducing the effect of motion due to shaking, rotation or any movement in camera.
 The video source is streamed using Gstreamer and can be used with an ip source, a local stream or a videofile (all using gstreamer).
 In this, a video stabilization library is used, because it is adequate for motion stabilization.

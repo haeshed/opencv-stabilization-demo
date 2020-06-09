@@ -23,6 +23,7 @@ def main():
     bor = 20
     w = cap.get(cv2.CAP_PROP_FRAME_WIDTH) * spar
     h = cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * spar
+    smooth = 30
 
     out = cv2.VideoWriter('output.avi', fourcc, 30.0, (int(2 * (w + 2 * bor)), int(h + 2 * bor)))
 
@@ -47,7 +48,7 @@ def main():
             frame_with_text = cv2.copyMakeBorder(frame_with_text, bor, bor, bor, bor, borderType=0)
 
             # initiates stabilization parameter for first few frames, enables smooth stabilization from start
-            window = idframe - 1 if idframe < 31 else 30
+            window = idframe - 1 if idframe < smooth + 1 else smooth
             # stabilization function based on parameters given forehand
             res = stabilizer.stabilize_frame(input_frame=frame, smoothing_window=window, border_type='black', border_size=bor)
             # res = cv2.copyMakeBorder(frame, bor, bor, bor, bor, borderType=0)

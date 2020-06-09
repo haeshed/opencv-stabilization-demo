@@ -2,17 +2,18 @@ import copy
 import cv2
 from datetime import datetime
 import numpy as np
-from vidstab.VidStab import VidStab
+# from vidstab.VidStab import VidStab
 import matplotlib.pyplot as plt
 
 
 def main():
     # initialize stabilizer
-    stabilizer = VidStab()
+    # stabilizer = VidStab()
 
     # sets video capture source, live feed or using existing file
-    cap = cv2.VideoCapture(0)
+    # cap = cv2.VideoCapture(0)
     # cap = cv2.VideoCapture('vtest2.avi')
+    cap = cv2.VideoCapture('autovideosrc ! videoconvert ! appsink')
 
     # set codec & font, initialize frame counter
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
@@ -48,8 +49,8 @@ def main():
             # initiates stabilization parameter for first few frames, enables smooth stabilization from start
             window = idframe - 1 if idframe < 31 else 30
             # stabilization function based on parameters given forehand
-            res = stabilizer.stabilize_frame(input_frame=frame, smoothing_window=window, border_type='black',
-                                             border_size=bor)
+            # res = stabilizer.stabilize_frame(input_frame=frame, smoothing_window=window, border_type='black', border_size=bor)
+            res = cv2.copyMakeBorder(frame, bor, bor, bor, bor, borderType=0)
 
             # text addition (date, time, frame number) for stabilized frame
             text = f'Width: {w} Height: {h} frame id: {idframe - 1}'
@@ -73,9 +74,9 @@ def main():
             break
 
     # shows graphic representation of video stabilization trajectory, option for exporting data
-    stabilizer.plot_trajectory()
+    # stabilizer.plot_trajectory()
     plt.show()
-    stabilizer.plot_transforms()
+    # stabilizer.plot_transforms()
     plt.show()
     # auto-release video capture & deletes open windows
     cap.release()

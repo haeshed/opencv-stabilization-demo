@@ -4,25 +4,37 @@ from datetime import datetime
 import numpy as np
 from vidstab.VidStab import VidStab
 import matplotlib.pyplot as plt
+import os
 
 
 def main():
     # initialize stabilizer
     stabilizer = VidStab()
-
+    # os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
     # sets video capture source, live feed or using existing file
-    cap = cv2.VideoCapture(0)
+    # cap = cv2.VideoCapture(0)
     # cap = cv2.VideoCapture('vtest2.avi')
+    # cap = cv2.VideoCapture("autovideosrc ! decodebin ! appsink", cv2.CAP_GSTREAMER)
+    # cap = cv2.VideoCapture("autovideosrc ! decodebin ! appsink", cv2.CAP_FFMPEG)
+    # cap = cv2.VideoCapture("gst-launch-1.0 appsink ! application/x-rtp, encoding-name=H264,payload=96 !  rtph264depay ! h264parse ! avdec_h264 !  autovideosink", cv2.CAP_GSTREAMER)
+    # cap = cv2.VideoCapture('videotestsrc ! video/x-raw,framerate=20/1 ! videoscale ! videoconvert ! appsink', cv2.CAP_GSTREAMER)
+    # cap = cv2.VideoCapture('autovideosrc ! video/x-raw,framerate=20/1 ! videoscale ! videoconvert ! appsink', cv2.CAP_GSTREAMER)
+    # cap = cv2.VideoCapture('udpsrc port=5000 caps = "application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)H264, payload=(int)96" ! rtph264depay ! decodebin ! videoconvert ! appsink',cv2.CAP_GSTREAMER)
+    # cap = cv2.VideoCapture('autovideosrc ! decodebin ! videorate ! video/x-raw,framerate=20/1 ! videoconvert ! video/x-raw, format=(string)BGR ! appsink', cv2.CAP_GSTREAMER)
+    # cap = cv2.VideoCapture('autovideosrc ! decodebin ! appsink', cv2.CAP_GSTREAMER)
+    # cap = cv2.VideoCapture('autovideosrc ! decodebin ! videoconvert ! appsink', cv2.CAP_GSTREAMER)
+    # cap = cv2.VideoCapture('rtsp://127.0.0.1:5000/out.h264')
+    # cap = cv2.VideoCapture('autovideosrc ! ffmpegcolorspace ! video/x-raw-rgb ! appsink', cv2.CAP_GSTREAMER)
+    # cap = cv2.VideoCapture('gst-launch-1.0 udpsrc port=5000 ! application/x-rtp, encoding-name=H264,payload=96 !  rtph264depay ! h264parse ! avdec_h264 !  autovideosink')
 
-    # set codec & font, initialize frame counter
+    # set codec
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
     # allows user to set parameter for size of frame & initializes new frame size
-    spar = .8
+    spar = .7
     bor = 20
     w = cap.get(cv2.CAP_PROP_FRAME_WIDTH) * spar
     h = cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * spar
-
     out = cv2.VideoWriter('output.avi', fourcc, 30.0, (int(2 * (w + 2 * bor)), int(h + 2 * bor)))
 
     idframe = 0
